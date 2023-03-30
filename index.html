@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>MVD QUIZ</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.3.0/dist/sweetalert2.all.min.js"></script>
+    <audio id="sound-correct" src="correcto.mp3"></audio>
+    <audio id="sound-incorrect" src="incorrecto.mp3"></audio>
+  </head>
+  <body>
+    <style>
+      * {
+        transition: all 0.3s;
+      }
+    
+      body {
+        background: cadetblue;
+        padding: 0;
+        margin: 0;
+        text-align: center;
+        font-family: calibri;
+        font-size: 120%;
+      }
+    
+      .contenedor {
+        width: 98vw;
+        height: 97vh;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+      }
+    
+      .encabezado {
+        position: relative;
+        background: white;
+        width: 600px;
+        height: 120px;
+        padding: 10px;
+        margin-right: 20px;
+      }
+    
+      .categoria {
+        opacity: 0.3;
+        text-align: left;
+      }
+    
+      .pregunta {
+        padding: 10px;
+        font-weight: bold;
+        font-size: 130%;
+      }
+    
+      .imagen {
+        object-fit: cover;
+        height: 0px;
+        width: 0px;
+      }
+    
+      .btn-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 0px;
+        justify-content: flex-start;
+      }
+      
+    
+      .btn-row {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 5px;
+      }
+    
+          .btn {
+      background: white;
+      width: 500px;
+      height: 40px;
+      padding: 10px;
+      margin: 5px;
+      cursor: pointer;
+      text-align: center;
+      font-weight: bold;
+      font-size: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-right: 10px;
+
+    }
+    
+      .btn:hover {
+        transform: scale(1.05);
+      }
+    
+      .numero {
+        position: absolute;
+        opacity: 0.3;
+        top: 10px;
+        right: 10px;
+      }
+    
+      .puntaje {
+        padding: 10px;
+        color: white;
+        text-align: center;
+      font-weight: bold;
+      font-size: 35px;
+      }
+      
+      .btn-container2 {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        align-items: center;
+      }
+      
+      .btn-superior,
+      .btn-inferior {
+
+        display: flex;
+        max-width: 600px;
+        justify-content: center;
+        align-items: center;
+        margin: 5px;
+      }
+
+      .botonera {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+    position: absolute;
+    top: 310px;
+    right: 355px;
+}
+
+.comodines {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn-comodin {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 5px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: white;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-size: 20px;
+  transition: all 0.3s;
+}
+
+.btn-comodin:hover {
+  transform: scale(1.1);
+}
+
+.vidas {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.vida {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 5px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: white;
+  border: none;
+  outline: none;
+  cursor: default;
+  font-size: 20px;
+}
+
+
+
+
+.vida i {
+  color: red;
+}
+
+.btn-comodin {
+  padding: 20px;
+}
+
+.btn-comodin img {
+  width: 360%;
+  height: 360%;
+  object-fit: contain;
+}
+
+.btn-comodin.clicked i {
+  color: green;
+}
+      
+
+.btn-contador {
+  width: 60px;
+  height: 60px;
+  font-size: 34px;
+  font-weight: bold;
+  color: #fff;
+  background-color: #28a745;
+  border-radius: 50%;
+  border: 2px solid white; /* Agregamos el borde blanco */
+  margin-right: 20px;
+  cursor: pointer;
+}
+
+.btn-contador.yellow {
+  background-color: #ffc107;
+}
+
+.btn-contador.red {
+  background-color: #dc3545;
+}
+
+    </style>
+  
+
+  <div class="botonera">
+    <div class="comodines">
+          <div class="puntaje" id="puntaje"></div>
+        </button>
+        <div class="contador">
+          <button class="btn-contador" id="contador">45</button>
+        </div>
+      <button class="btn-comodin" id="comodin1">
+        <img src="/corazon.png" alt="Heart icon" class="comodin-icon">
+      </button>
+      <button class="btn-comodin" id="comodin2">
+        <img src="/corazon.png" alt="Star icon" class="comodin-icon">
+      </button>
+      <button class="btn-comodin" id="comodin3">
+        <img src="/corazon.png" alt="Bolt icon" class="comodin-icon">
+      </button>
+      <button class="btn-comodin" id="comodin4">
+        <img src="/telefono.png" alt="Heart icon" class="comodin-icon">
+      </button>
+      <button class="btn-comodin" id="comodin5">
+        <img src="/chat.png" alt="Star icon" class="comodin-icon">
+      </button>
+    </div>
+  </div>
+  
+  <script>
+    const btnComodin1 = document.getElementById("comodin1");
+    const btnComodin2 = document.getElementById("comodin2");
+    const btnComodin3 = document.getElementById("comodin3");
+    const btnComodin4 = document.getElementById("comodin4");
+    const btnComodin5 = document.getElementById("comodin5");
+
+  
+    btnComodin1.addEventListener("click", () => {
+      const icono = btnComodin1.querySelector(".comodin-icon");
+      icono.src = "/corazon-bak.png";
+    });
+  
+    btnComodin2.addEventListener("click", () => {
+      const icono = btnComodin2.querySelector(".comodin-icon");
+      icono.src = "/corazon-bak.png";
+    });
+  
+    btnComodin3.addEventListener("click", () => {
+      const icono = btnComodin3.querySelector(".comodin-icon");
+      icono.src = "/corazon-bak.png";
+    });
+    btnComodin4.addEventListener("click", () => {
+      const icono = btnComodin4.querySelector(".comodin-icon");
+      icono.src = "telefono-bak.png";
+    });
+  
+    btnComodin5.addEventListener("click", () => {
+      const icono = btnComodin5.querySelector(".comodin-icon");
+      icono.src = "/chat-bak.png";
+    });
+
+  </script>
+  <div class="contenedor">
+    <div class="puntaje" id="puntaje"></div>
+    <div class="encabezado">
+      <div class="categoria" id="categoria"></div>
+      <div class="numero" id="numero"></div>
+      <div class="pregunta" id="pregunta"></div>
+      <img src="#" class="imagen" id="imagen">
+    </div>
+    <div class="btn-container">
+      <div class="btn-row btn-superior">
+        <div class="btn" id="btn1" onclick="oprimir_btn(0)"></div>
+        <div class="btn" id="btn2" onclick="oprimir_btn(1)"></div>
+      </div>
+      <div class="btn-row btn-inferior">
+        <div class="btn" id="btn3" onclick="oprimir_btn(2)"></div>
+        <div class="btn" id="btn4" onclick="oprimir_btn(3)"></div>
+      </div>
+    </div>
+    <script src="index.js"></script>
+  </div>
+
